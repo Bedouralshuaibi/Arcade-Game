@@ -9,7 +9,7 @@
 
 1- open HTML file to run the game.
 
-2- The player should use the arrow key in the keyboard to move up/down/life/right
+2- The player should use the arrow key in the keyboard to move up/down/lift/right.
 
   * When the Player reach the water line he won the game, and start agin to the starter point.
 
