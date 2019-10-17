@@ -2,7 +2,8 @@
 
 
 // Enemies our player must avoid
-var Enemy = function(x,y,speed) {
+class Enemy {
+  constructor(x,y,speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
     this.x = x;
@@ -12,11 +13,11 @@ var Enemy = function(x,y,speed) {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
 
-};
+}
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
+  update(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
@@ -25,8 +26,8 @@ Enemy.prototype.update = function(dt) {
       this.x -= 500;
       this.speed = 50 + Math.floor(Math.random() * 350)
 
-    }};
-Enemy.prototype.checkCollisions = function() {
+    }}
+  checkCollisions() {
     let enemyLiftSide = this.x -50;  // create a shape for enemy wth add 50 /subtract 60 (on x and y axis)
     let enemyRightSide = this.x + 50; // chosing these number because the canvas size 505 * 606
     let enemyTopSide = this.y - 60;
@@ -40,19 +41,19 @@ Enemy.prototype.checkCollisions = function() {
           setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2000);
            console.log('restart after collision!');
     }
-};
+}
 
 // Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
+   render() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
+}
+}
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
 
 class Player {
-  constructor(x, y){
+  constructor(x, y,){
    this.x = x;
    this.y = y;
    this.sprite = 'images/char-cat-girl.png';
@@ -77,35 +78,37 @@ class Player {
       }
 
       if (this.y < 0){     /// won
-         var x = document.getElementById("snackbar"); // won message
+         var x = document.getElementById("snackbar"); // win message
          x.className = "show";
-         setTimeout(function(){ x.className = x.className.replace("show", ""); }, 1000);
-         setTimeout(restPlayer,1000); // rest player position
-      }
-            function restPlayer(){
-              player.x = 200;
-              player.y = 410;
-              setTimeout(function(){ window.location.reload(); }, 200);
+         setTimeout(function(){
+            x.className = x.className.replace("show", ""); }, 2000);
+         player.x = 200;
+         player.y = 410;
+         this.restartPlayer();
+       }
+   }
+  restartPlayer(){
+          setTimeout(function(){ window.location.reload(); }, 1000);
              }
-     }
 };
 
-var Gem = function(x,y){
-   this.x=x;
-   this.y = y;
-   this.image = 'images/Gem-Orange.png';
- }
+class Gem {
+    constructor(x,y){
+     this.x=x;
+     this.y = y;
+     this.image = 'images/Gem-Orange.png';
+   }
 
-Gem.prototype.render = function () {
-ctx.drawImage(Resources.get(this.image), this.x, this.y);
- }
-Gem.prototype.collected = function () {
-   let gemLiftSide = this.x -50;
-   let gemRightSide = this.x + 50;
-   let gemTopSide = this.y - 60;
-   let gemDownSide = this.y + 60;
+  render() {
+     ctx.drawImage(Resources.get(this.image), this.x, this.y);
+    }
+  collected() {
+     let gemLiftSide = this.x -50;
+     let gemRightSide = this.x + 50;
+     let gemTopSide = this.y - 60;
+     let gemDownSide = this.y + 60;
 
-   if (player.x >= gemLiftSide && player.x <= gemRightSide
+      if (player.x >= gemLiftSide && player.x <= gemRightSide
       && player.y >= gemTopSide && player.y <= gemDownSide){
          this.x = '-100';
          this.y = '-100';
@@ -114,8 +117,9 @@ Gem.prototype.collected = function () {
           mes.className = "show";
          setTimeout(function(){ mes.className = mes.className.replace("show", ""); }, 900)
 
+         }
+     }
 }
-};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
